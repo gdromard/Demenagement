@@ -4,7 +4,9 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Carton implements Serializable {
+public class Carton implements Model, Serializable {
+
+    /** The serialVersionUID. */
     private static final long serialVersionUID = -3863747761025844663L;
 
     private int numero;
@@ -12,6 +14,16 @@ public class Carton implements Serializable {
     private List<Destination> destinations;
 
     private List<Contenu> contenus;
+
+    private int id;
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public int getNumero() {
         return numero;

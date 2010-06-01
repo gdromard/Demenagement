@@ -24,6 +24,11 @@ public class DemenagementServiceImpl extends RemoteServiceServlet implements Dem
     }
 
     @Override
+    public boolean saveDemenagement(Demenagement demenenagement) throws IllegalArgumentException {
+        return repo.saveDemenagement(demenenagement);
+    }
+
+    @Override
     public boolean removeDemenagement(Demenagement demenenagement) throws IllegalArgumentException {
         return repo.removeDemenagement(demenenagement);
     }

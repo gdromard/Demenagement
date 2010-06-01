@@ -9,6 +9,7 @@ import net.dromard.demenagement.shared.services.DemenagementServiceAsync;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.FlexTable;
@@ -23,16 +24,11 @@ import com.google.gwt.user.datepicker.client.DateBox;
 public class DemenagementPanelHandler {
     private final DemenagementServiceAsync demenagementService = GWT.create(DemenagementService.class);
 
-    public Widget buildList(List<Demenagement> demenagements) {
+    public Widget buildList() {
         VerticalPanel widget = new VerticalPanel();
 
         final DemenagementList demenagementsList = new DemenagementList();
-        int i = 0;
-        Label header = new Label("Demenagements");
-        demenagementsList.setWidget(i++, 0, header);
-        for (Demenagement demenagement : demenagements) {
-            demenagementsList.add(demenagement);
-        }
+        demenagementsList.reload();
 
         HorizontalPanel buttons = new HorizontalPanel();
         Button addBtn = new Button("+");
@@ -44,45 +40,50 @@ public class DemenagementPanelHandler {
         });
         buttons.add(addBtn);
 
+        Button reloadBtn = new Button("Reload");
+        reloadBtn.addClickHandler(new ClickHandler() {
+            @Override
+            public void onClick(ClickEvent event) {
+                demenagementsList.reload();
+            }
+        });
+        buttons.add(reloadBtn);
+
         widget.add(demenagementsList);
         widget.add(buttons);
         return widget;
     }
 
     private class DemenagementList extends FlexTable {
-        public void load(List<Demenagement> demenagements) {
-            clear(true);
-            int i = 0;
-            Label header = new Label("Demenagements");
-            setWidget(i++, 0, header);
-            for (Demenagement demenagement : demenagements) {
-                add(demenagement);
-            }
-        }
-
         public void reload() {
-            /*
-            clear(true);
-            int i = 0;
-            Label header = new Label("Demenagements");
-            setWidget(i++, 0, header);
-            */
-        }
-
-        public void add(final Demenagement demenagement) {
-            Label line = new Label(demenagement.getDate().toString());
-            if (getRowCount() % 2 == 0) {
-                line.addStyleName("odd");
-            }
             final DemenagementList me = this;
-
-            line.addClickHandler(new ClickHandler() {
+            demenagementService.getDemenagements(new AsyncCallback<List<Demenagement>>() {
                 @Override
-                public void onClick(ClickEvent event) {
-                    showEditForm(me, demenagement);
+                public void onFailure(Throwable caught) {
+                    Window.alert("Ooops delete action failed !");
+                }
+
+                @Override
+                public void onSuccess(List<Demenagement> result) {
+                    removeAllRows();
+                    Label header = new Label("Demenagements");
+                    setWidget(0, 0, header);
+                    for (final Demenagement demenagement : result) {
+                        Label line = new Label(demenagement.getId() + " - " + demenagement.getDate());
+                        if (getRowCount() % 2 == 0) {
+                            line.addStyleName("odd");
+                        }
+
+                        line.addClickHandler(new ClickHandler() {
+                            @Override
+                            public void onClick(ClickEvent event) {
+                                showEditForm(me, demenagement);
+                            }
+                        });
+                        setWidget(getRowCount(), 0, line);
+                    }
                 }
             });
-            setWidget(getRowCount(), 0, line);
         }
     }
 
@@ -92,7 +93,7 @@ public class DemenagementPanelHandler {
 
         Grid form = new Grid(3, 2);
         form.setWidget(0, 0, new Label("Date"));
-        DateBox dateBox = new DateBox();
+        final DateBox dateBox = new DateBox();
         dateBox.setValue(demenagement.getDate());
         form.setWidget(0, 1, dateBox);
         form.setWidget(1, 0, new Label("Cartons"));
@@ -110,7 +111,7 @@ public class DemenagementPanelHandler {
         saveButton.addClickHandler(new ClickHandler() {
             @Override
             public void onClick(ClickEvent event) {
-                /*
+                demenagement.setDate(dateBox.getValue());
                 demenagementService.saveDemenagement(demenagement, new AsyncCallback<Boolean>() {
                     @Override
                     public void onFailure(Throwable caught) {
@@ -120,14 +121,13 @@ public class DemenagementPanelHandler {
                     @Override
                     public void onSuccess(Boolean result) {
                         if (result) {
-                            demenagementsList.reload(demenagements);
+                            demenagementsList.reload();
                             popup.removeFromParent();
                         } else {
                             Window.alert("Ooops server response says that it did not succeed !");
                         }
                     }
                 });
-                */
             }
         });
 
@@ -137,31 +137,29 @@ public class DemenagementPanelHandler {
             public void onClick(ClickEvent event) {
             }
         });
-        /*
-                Button deleteButton = new Button("Delete");
-                deleteButton.addClickHandler(new ClickHandler() {
+        Button deleteButton = new Button("Delete");
+        deleteButton.addClickHandler(new ClickHandler() {
+            @Override
+            public void onClick(ClickEvent event) {
+                demenagementService.removeDemenagement(demenagement, new AsyncCallback<Boolean>() {
                     @Override
-                    public void onClick(ClickEvent event) {
-                        demenagementService.removeDemenagement(demenagement, new AsyncCallback<Boolean>() {
-                            @Override
-                            public void onFailure(Throwable caught) {
-                                Window.alert("Ooops delete action failed !");
-                            }
+                    public void onFailure(Throwable caught) {
+                        Window.alert("Ooops delete action failed !");
+                    }
 
-                            @Override
-                            public void onSuccess(Boolean result) {
-                                if (result) {
-                                    demenagementsList.reload();
-                                    popup.removeFromParent();
-                                } else {
-                                    Window.alert("Ooops server response says that it did not succeed !");
-                                }
-                            }
-                        });
-                        popup.removeFromParent();
+                    @Override
+                    public void onSuccess(Boolean result) {
+                        if (result) {
+                            demenagementsList.reload();
+                            popup.removeFromParent();
+                        } else {
+                            Window.alert("Ooops server response says that it did not succeed !");
+                        }
                     }
                 });
-        */
+                popup.removeFromParent();
+            }
+        });
         Button closeButton = new Button("Cancel");
         closeButton.addClickHandler(new ClickHandler() {
             @Override
@@ -172,7 +170,7 @@ public class DemenagementPanelHandler {
 
         btnPanel.add(saveButton);
         btnPanel.add(addButton);
-        //btnPanel.add(deleteButton);
+        btnPanel.add(deleteButton);
         btnPanel.add(closeButton);
 
         vPanel.add(form);
@@ -214,7 +212,7 @@ public class DemenagementPanelHandler {
                     @Override
                     public void onSuccess(Boolean result) {
                         if (result) {
-                            demenagementsList.add(demenagement);
+                            demenagementsList.reload();
                             popup.removeFromParent();
                         } else {
                             form.setWidget(3, 0, new Label("Ooops server response says that it did not succeed !"));

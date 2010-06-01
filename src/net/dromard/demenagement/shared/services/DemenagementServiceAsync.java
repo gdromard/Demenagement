@@ -15,4 +15,6 @@ public interface DemenagementServiceAsync {
     void addDemenagement(Demenagement demenagement, AsyncCallback<Boolean> callback) throws IllegalArgumentException;
 
     void removeDemenagement(Demenagement demenagement, AsyncCallback<Boolean> callback) throws IllegalArgumentException;
+
+    void saveDemenagement(Demenagement demenagement, AsyncCallback<Boolean> asyncCallback) throws IllegalArgumentException;
 }

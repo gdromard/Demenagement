@@ -16,5 +16,7 @@ public interface DemenagementService extends RemoteService {
 
     boolean addDemenagement(Demenagement demenenagement) throws IllegalArgumentException;
 
+    boolean saveDemenagement(Demenagement demenenagement) throws IllegalArgumentException;
+
     boolean removeDemenagement(Demenagement demenenagement) throws IllegalArgumentException;
 }
