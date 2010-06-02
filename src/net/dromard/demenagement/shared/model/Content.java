@@ -2,10 +2,14 @@ package net.dromard.demenagement.shared.model;
 
 import java.io.Serializable;
 
-public class Contenu implements Model, Serializable {
+public class Content implements Model, Serializable {
 
     /** The serialVersionUID. */
     private static final long serialVersionUID = -4025520257839180867L;
+
+    private int id;
+
+    private int cartonId;
 
     private String name;
 
@@ -13,14 +17,20 @@ public class Contenu implements Model, Serializable {
 
     private int quantity = 1;
 
-    private int id;
-
     public int getId() {
         return id;
     }
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public void setCartonId(int cartonId) {
+        this.cartonId = cartonId;
+    }
+
+    public int getCartonId() {
+        return cartonId;
     }
 
     public int getQuantity() {

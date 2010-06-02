@@ -23,9 +23,9 @@ import com.google.gwt.user.client.ui.Widget;
 import com.google.gwt.user.datepicker.client.DateBox;
 
 public class DemenagementPanelHandler {
-    private final DemenagementServiceAsync demenagementService = GWT.create(DemenagementService.class);
+    private final DemenagementServiceAsync demenagementService = (DemenagementServiceAsync) GWT.create(DemenagementService.class);
 
-    private final MyMessages myMessages = GWT.create(MyMessages.class);;
+    private final MyMessages myMessages = GWT.create(MyMessages.class);
 
     public Widget buildList() {
         VerticalPanel widget = new VerticalPanel();
@@ -60,10 +60,11 @@ public class DemenagementPanelHandler {
     private class DemenagementList extends FlexTable {
         public void reload() {
             final DemenagementList me = this;
-            demenagementService.getDemenagements(new AsyncCallback<List<Demenagement>>() {
+            demenagementService.getList(new AsyncCallback<List<Demenagement>>() {
                 @Override
                 public void onFailure(Throwable caught) {
                     Window.alert(myMessages.errorActionFailed(myMessages.actionReaload()));
+                    caught.printStackTrace();
                 }
 
                 @Override
@@ -101,12 +102,14 @@ public class DemenagementPanelHandler {
         form.setWidget(0, 1, dateBox);
         form.setWidget(1, 0, new Label(myMessages.labelCartons()));
         FlexTable cartonsList = new FlexTable();
+        /*
         if (demenagement.getCartons() != null) {
             for (int i = 0; i < demenagement.getCartons().size(); ++i) {
                 cartonsList.setWidget(i, 0, new Label(myMessages.labelCartonNumber()));
                 cartonsList.setWidget(i, 1, new Label(demenagement.getCartons().get(i).getNumero() + ""));
             }
         }
+        */
         form.setWidget(1, 1, cartonsList);
 
         HorizontalPanel btnPanel = new HorizontalPanel();
@@ -115,7 +118,7 @@ public class DemenagementPanelHandler {
             @Override
             public void onClick(ClickEvent event) {
                 demenagement.setDate(dateBox.getValue());
-                demenagementService.saveDemenagement(demenagement, new AsyncCallback<Boolean>() {
+                demenagementService.save(demenagement, new AsyncCallback<Boolean>() {
                     @Override
                     public void onFailure(Throwable caught) {
                         Window.alert(myMessages.errorActionFailed(myMessages.actionSave()));
@@ -144,7 +147,7 @@ public class DemenagementPanelHandler {
         deleteButton.addClickHandler(new ClickHandler() {
             @Override
             public void onClick(ClickEvent event) {
-                demenagementService.removeDemenagement(demenagement, new AsyncCallback<Boolean>() {
+                demenagementService.remove(demenagement, new AsyncCallback<Boolean>() {
                     @Override
                     public void onFailure(Throwable caught) {
                         Window.alert(myMessages.errorActionFailed(myMessages.actionSave()));
@@ -195,18 +198,20 @@ public class DemenagementPanelHandler {
         form.setWidget(0, 1, dateBox);
         form.setWidget(1, 0, new Label(myMessages.labelCartons()));
         FlexTable cartonsList = new FlexTable();
+        /*
         if (demenagement.getCartons() != null) {
             for (int i = 0; i < demenagement.getCartons().size(); ++i) {
                 cartonsList.setWidget(i, 0, new Label(myMessages.labelCartonNumber()));
                 cartonsList.setWidget(i, 1, new Label(demenagement.getCartons().get(i).getNumero() + ""));
             }
         }
+        */
         Button addButton = new Button(myMessages.actionAdd());
         addButton.addClickHandler(new ClickHandler() {
             @Override
             public void onClick(ClickEvent event) {
                 demenagement.setDate(dateBox.getValue());
-                demenagementService.addDemenagement(demenagement, new AsyncCallback<Boolean>() {
+                demenagementService.add(demenagement, new AsyncCallback<Boolean>() {
                     @Override
                     public void onFailure(Throwable caught) {
                         form.setWidget(3, 0, new Label(myMessages.errorActionFailed(myMessages.actionSave())));

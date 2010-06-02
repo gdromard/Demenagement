@@ -4,21 +4,46 @@
     "http://java.sun.com/dtd/web-app_2_3.dtd">
 
 <web-app>
-  
-  <!-- Servlets -->
-  <servlet>
-    <servlet-name>demenagementServlet</servlet-name>
-    <servlet-class>net.dromard.demenagement.server.DemenagementServiceImpl</servlet-class>
-  </servlet>
-  
-  <servlet-mapping>
-    <servlet-name>demenagementServlet</servlet-name>
-    <url-pattern>/demenagement/demenagement</url-pattern>
-  </servlet-mapping>
-  
-  <!-- Default page to serve -->
-  <welcome-file-list>
-    <welcome-file>Demenagement.html</welcome-file>
-  </welcome-file-list>
+	<!-- Servlets -->
+	<servlet>
+		<servlet-name>cartonServlet</servlet-name>
+		<servlet-class>net.dromard.demenagement.server.CsvCartonService</servlet-class>
+	</servlet>
+	<servlet>
+		<servlet-name>contentServlet</servlet-name>
+		<servlet-class>net.dromard.demenagement.server.CsvContentService</servlet-class>
+	</servlet>
+	<servlet>
+		<servlet-name>demenagementServlet</servlet-name>
+		<servlet-class>net.dromard.demenagement.server.CsvDemenagementService</servlet-class>
+	</servlet>
+	<servlet>
+		<servlet-name>destinationServlet</servlet-name>
+		<servlet-class>net.dromard.demenagement.server.CsvDestinationService</servlet-class>
+	</servlet>
+
+
+	<servlet-mapping>
+		<servlet-name>cartonServlet</servlet-name>
+		<url-pattern>/demenagement/carton</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>contentServlet</servlet-name>
+		<url-pattern>/demenagement/content</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>demenagementServlet</servlet-name>
+		<url-pattern>/demenagement/demenagement</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>destinationServlet</servlet-name>
+		<url-pattern>/demenagement/destination</url-pattern>
+	</servlet-mapping>
+
+
+	<!-- Default page to serve -->
+	<welcome-file-list>
+		<welcome-file>Demenagement.html</welcome-file>
+	</welcome-file-list>
 
 </web-app>
