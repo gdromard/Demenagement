@@ -6,12 +6,13 @@ import java.util.List;
 
 public class Carton implements Model, Serializable {
 
-    /** The serialVersionUID. */
-    private static final long serialVersionUID = -3863747761025844663L;
+    private static final long serialVersionUID = -4984816144263505451L;
 
     private int numero;
 
-    private List<Destination> destinations;
+    private int primaryDestination;
+
+    private int secondaryDestination;
 
     private List<Contenu> contenus;
 
@@ -48,18 +49,19 @@ public class Carton implements Model, Serializable {
         this.contenus.add(contenu);
     }
 
-    public List<Destination> getDestinations() {
-        return destinations;
+    public int getPrimaryDestination() {
+        return primaryDestination;
     }
 
-    public void add(Destination destination) {
-        if (this.destinations == null) {
-            this.destinations = new ArrayList<Destination>();
-        }
-        this.destinations.add(destination);
+    public void setPrimaryDestination(int destination) {
+        this.primaryDestination = destination;
     }
 
-    public void setDestination(List<Destination> destinations) {
-        this.destinations = destinations;
+    public int getSecondaryDestination() {
+        return secondaryDestination;
+    }
+
+    public void setSecondaryDestination(int destination) {
+        this.secondaryDestination = destination;
     }
 }
