@@ -2,6 +2,7 @@ package net.dromard.demenagement.client.handlers;
 
 import java.util.List;
 
+import net.dromard.demenagement.client.MyMessages;
 import net.dromard.demenagement.shared.model.Demenagement;
 import net.dromard.demenagement.shared.services.DemenagementService;
 import net.dromard.demenagement.shared.services.DemenagementServiceAsync;
@@ -24,6 +25,8 @@ import com.google.gwt.user.datepicker.client.DateBox;
 public class DemenagementPanelHandler {
     private final DemenagementServiceAsync demenagementService = GWT.create(DemenagementService.class);
 
+    private final MyMessages myMessages = GWT.create(MyMessages.class);;
+
     public Widget buildList() {
         VerticalPanel widget = new VerticalPanel();
 
@@ -31,7 +34,7 @@ public class DemenagementPanelHandler {
         demenagementsList.reload();
 
         HorizontalPanel buttons = new HorizontalPanel();
-        Button addBtn = new Button("+");
+        Button addBtn = new Button(myMessages.actionAdd());
         addBtn.addClickHandler(new ClickHandler() {
             @Override
             public void onClick(ClickEvent event) {
@@ -40,7 +43,7 @@ public class DemenagementPanelHandler {
         });
         buttons.add(addBtn);
 
-        Button reloadBtn = new Button("Reload");
+        Button reloadBtn = new Button(myMessages.actionReaload());
         reloadBtn.addClickHandler(new ClickHandler() {
             @Override
             public void onClick(ClickEvent event) {
@@ -60,18 +63,18 @@ public class DemenagementPanelHandler {
             demenagementService.getDemenagements(new AsyncCallback<List<Demenagement>>() {
                 @Override
                 public void onFailure(Throwable caught) {
-                    Window.alert("Ooops delete action failed !");
+                    Window.alert(myMessages.errorActionFailed(myMessages.actionReaload()));
                 }
 
                 @Override
                 public void onSuccess(List<Demenagement> result) {
                     removeAllRows();
-                    Label header = new Label("Demenagements");
+                    Label header = new Label(myMessages.labelDemenagements());
                     setWidget(0, 0, header);
                     for (final Demenagement demenagement : result) {
                         Label line = new Label(demenagement.getId() + " - " + demenagement.getDate());
                         if (getRowCount() % 2 == 0) {
-                            line.addStyleName("odd");
+                            line.addStyleName(myMessages.cssClassOdd());
                         }
 
                         line.addClickHandler(new ClickHandler() {
@@ -92,22 +95,22 @@ public class DemenagementPanelHandler {
         VerticalPanel vPanel = new VerticalPanel();
 
         Grid form = new Grid(3, 2);
-        form.setWidget(0, 0, new Label("Date"));
+        form.setWidget(0, 0, new Label(myMessages.labelDate()));
         final DateBox dateBox = new DateBox();
         dateBox.setValue(demenagement.getDate());
         form.setWidget(0, 1, dateBox);
-        form.setWidget(1, 0, new Label("Cartons"));
+        form.setWidget(1, 0, new Label(myMessages.labelCartons()));
         FlexTable cartonsList = new FlexTable();
         if (demenagement.getCartons() != null) {
             for (int i = 0; i < demenagement.getCartons().size(); ++i) {
-                cartonsList.setWidget(i, 0, new Label("Carton n°"));
+                cartonsList.setWidget(i, 0, new Label(myMessages.labelCartonNumber()));
                 cartonsList.setWidget(i, 1, new Label(demenagement.getCartons().get(i).getNumero() + ""));
             }
         }
         form.setWidget(1, 1, cartonsList);
 
         HorizontalPanel btnPanel = new HorizontalPanel();
-        Button saveButton = new Button("Save");
+        Button saveButton = new Button(myMessages.actionSave());
         saveButton.addClickHandler(new ClickHandler() {
             @Override
             public void onClick(ClickEvent event) {
@@ -115,7 +118,7 @@ public class DemenagementPanelHandler {
                 demenagementService.saveDemenagement(demenagement, new AsyncCallback<Boolean>() {
                     @Override
                     public void onFailure(Throwable caught) {
-                        Window.alert("Ooops save action failed !");
+                        Window.alert(myMessages.errorActionFailed(myMessages.actionSave()));
                     }
 
                     @Override
@@ -124,27 +127,27 @@ public class DemenagementPanelHandler {
                             demenagementsList.reload();
                             popup.removeFromParent();
                         } else {
-                            Window.alert("Ooops server response says that it did not succeed !");
+                            Window.alert(myMessages.errorServerDidNotSucceed());
                         }
                     }
                 });
             }
         });
 
-        Button addButton = new Button("Add");
+        Button addButton = new Button(myMessages.actionAdd());
         addButton.addClickHandler(new ClickHandler() {
             @Override
             public void onClick(ClickEvent event) {
             }
         });
-        Button deleteButton = new Button("Delete");
+        Button deleteButton = new Button(myMessages.actionDelete());
         deleteButton.addClickHandler(new ClickHandler() {
             @Override
             public void onClick(ClickEvent event) {
                 demenagementService.removeDemenagement(demenagement, new AsyncCallback<Boolean>() {
                     @Override
                     public void onFailure(Throwable caught) {
-                        Window.alert("Ooops delete action failed !");
+                        Window.alert(myMessages.errorActionFailed(myMessages.actionSave()));
                     }
 
                     @Override
@@ -153,14 +156,14 @@ public class DemenagementPanelHandler {
                             demenagementsList.reload();
                             popup.removeFromParent();
                         } else {
-                            Window.alert("Ooops server response says that it did not succeed !");
+                            Window.alert(myMessages.errorServerDidNotSucceed());
                         }
                     }
                 });
                 popup.removeFromParent();
             }
         });
-        Button closeButton = new Button("Cancel");
+        Button closeButton = new Button(myMessages.actionCancel());
         closeButton.addClickHandler(new ClickHandler() {
             @Override
             public void onClick(ClickEvent event) {
@@ -186,19 +189,19 @@ public class DemenagementPanelHandler {
 
         final Demenagement demenagement = new Demenagement();
         final Grid form = new Grid(4, 2);
-        form.setWidget(0, 0, new Label("Date"));
+        form.setWidget(0, 0, new Label(myMessages.labelDate()));
         final DateBox dateBox = new DateBox();
         dateBox.setValue(demenagement.getDate());
         form.setWidget(0, 1, dateBox);
-        form.setWidget(1, 0, new Label("Cartons"));
+        form.setWidget(1, 0, new Label(myMessages.labelCartons()));
         FlexTable cartonsList = new FlexTable();
         if (demenagement.getCartons() != null) {
             for (int i = 0; i < demenagement.getCartons().size(); ++i) {
-                cartonsList.setWidget(i, 0, new Label("Carton n°"));
+                cartonsList.setWidget(i, 0, new Label(myMessages.labelCartonNumber()));
                 cartonsList.setWidget(i, 1, new Label(demenagement.getCartons().get(i).getNumero() + ""));
             }
         }
-        Button addButton = new Button("Add");
+        Button addButton = new Button(myMessages.actionAdd());
         addButton.addClickHandler(new ClickHandler() {
             @Override
             public void onClick(ClickEvent event) {
@@ -206,7 +209,7 @@ public class DemenagementPanelHandler {
                 demenagementService.addDemenagement(demenagement, new AsyncCallback<Boolean>() {
                     @Override
                     public void onFailure(Throwable caught) {
-                        form.setWidget(3, 0, new Label("Ooops save action failed !"));
+                        form.setWidget(3, 0, new Label(myMessages.errorActionFailed(myMessages.actionSave())));
                     }
 
                     @Override
@@ -215,13 +218,13 @@ public class DemenagementPanelHandler {
                             demenagementsList.reload();
                             popup.removeFromParent();
                         } else {
-                            form.setWidget(3, 0, new Label("Ooops server response says that it did not succeed !"));
+                            form.setWidget(3, 0, new Label(myMessages.errorServerDidNotSucceed()));
                         }
                     }
                 });
             }
         });
-        Button closeButton = new Button("Cancel");
+        Button closeButton = new Button(myMessages.actionCancel());
         closeButton.addClickHandler(new ClickHandler() {
             @Override
             public void onClick(ClickEvent event) {

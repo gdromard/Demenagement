@@ -19,4 +19,7 @@
   <source path='client'/>
   <source path='shared'/>
 
+  <extend-property name="locale" values="en"/>
+  <extend-property name="locale" values="fr"/>
+
 </module>
