@@ -14,6 +14,7 @@
 
 	<!-- Specify the app entry point class.                         -->
 	<entry-point class='net.dromard.demenagement.client.Demenagement' />
+	<inherits name="com.google.gwt.resources.Resources" />
 
 	<!-- Specify the paths for translatable code                    -->
 	<source path='client' />

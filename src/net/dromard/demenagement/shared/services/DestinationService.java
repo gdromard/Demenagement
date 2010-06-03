@@ -7,6 +7,6 @@ import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 /**
  * The client side stub for the RPC service.
  */
-@RemoteServiceRelativePath("destination")
+@RemoteServiceRelativePath("destination.service")
 public interface DestinationService extends AbstractService<Destination> {
 }

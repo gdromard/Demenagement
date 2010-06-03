@@ -1,10 +1,10 @@
-package net.dromard.demenagement.client;
+package net.dromard.demenagement.client.resources;
 
 import com.google.gwt.i18n.client.Messages;
 import com.google.gwt.i18n.client.LocalizableResource.DefaultLocale;
 
 @DefaultLocale(value = "fr")
-public interface MyMessages extends Messages {
+public interface ClientMessages extends Messages {
     String actionAdd();
 
     String actionCancel();

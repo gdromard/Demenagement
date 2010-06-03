@@ -2,7 +2,7 @@ package net.dromard.demenagement.client.handlers;
 
 import java.util.List;
 
-import net.dromard.demenagement.client.MyMessages;
+import net.dromard.demenagement.client.resources.ClientMessages;
 import net.dromard.demenagement.shared.model.Demenagement;
 import net.dromard.demenagement.shared.services.DemenagementService;
 import net.dromard.demenagement.shared.services.DemenagementServiceAsync;
@@ -25,7 +25,7 @@ import com.google.gwt.user.datepicker.client.DateBox;
 public class DemenagementPanelHandler {
     private final DemenagementServiceAsync demenagementService = (DemenagementServiceAsync) GWT.create(DemenagementService.class);
 
-    private final MyMessages myMessages = GWT.create(MyMessages.class);
+    private final ClientMessages myMessages = GWT.create(ClientMessages.class);
 
     public Widget buildList() {
         VerticalPanel widget = new VerticalPanel();
