@@ -7,7 +7,7 @@
 	<!-- Servlets -->
 	<servlet>
 		<servlet-name>dispatcherServlet</servlet-name>
-		<servlet-class>net.dromard.demenagement.server.RpcDispatcherService</servlet-class>
+		<servlet-class>net.dromard.demenagement.server.services.RpcDispatcherService</servlet-class>
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>dispatcherServlet</servlet-name>

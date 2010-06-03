@@ -1,8 +1,9 @@
-package net.dromard.demenagement.server;
+package net.dromard.demenagement.server.services;
 
 import java.io.IOException;
 import java.util.List;
 
+import net.dromard.demenagement.server.repository.CsvRepository;
 import net.dromard.demenagement.shared.model.Destination;
 
 public class CsvDestinationService extends CsvAbstractService<Destination> {

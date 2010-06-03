@@ -1,4 +1,4 @@
-package net.dromard.demenagement.server;
+package net.dromard.demenagement.server.services;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -7,9 +7,7 @@ import java.util.List;
 import net.dromard.demenagement.shared.model.Model;
 import net.dromard.demenagement.shared.services.AbstractService;
 
-import com.google.gwt.user.server.rpc.RemoteServiceServlet;
-
-public abstract class CsvAbstractService<M extends Model> extends RemoteServiceServlet implements AbstractService<M> {
+public abstract class CsvAbstractService<M extends Model> implements AbstractService<M> {
     private static final long serialVersionUID = 597653176099018308L;
 
     protected List<M> models = null;

@@ -1,4 +1,4 @@
-package net.dromard.demenagement.server;
+package net.dromard.demenagement.server.services;
 
 import java.lang.reflect.Method;
 import java.util.HashMap;

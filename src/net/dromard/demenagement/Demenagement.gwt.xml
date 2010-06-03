@@ -13,7 +13,7 @@
 	<!-- Other module inherits                                      -->
 
 	<!-- Specify the app entry point class.                         -->
-	<entry-point class='net.dromard.demenagement.client.Demenagement' />
+	<entry-point class='net.dromard.demenagement.client.ClientEntryPoint' />
 	<inherits name="com.google.gwt.resources.Resources" />
 
 	<!-- Specify the paths for translatable code                    -->

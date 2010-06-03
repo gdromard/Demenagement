@@ -1,13 +1,8 @@
-package net.dromard.demenagement.server;
+package net.dromard.demenagement.server.repository;
 
 import java.io.IOException;
 import java.util.List;
 
-import net.dromard.demenagement.server.repository.CartonTable;
-import net.dromard.demenagement.server.repository.ContentTable;
-import net.dromard.demenagement.server.repository.DemenagementTable;
-import net.dromard.demenagement.server.repository.DestinationTable;
-import net.dromard.demenagement.server.repository.Table;
 import net.dromard.demenagement.shared.model.Carton;
 import net.dromard.demenagement.shared.model.Content;
 import net.dromard.demenagement.shared.model.Demenagement;
