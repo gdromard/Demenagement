@@ -1,0 +1,18 @@
+.grid-container {
+	padding: 4px;
+}
+
+.grid {
+	width: 800px;
+	border: 1px solid black;	
+}
+
+.grid .header {
+	background-color: #2062B8;
+	color: white;
+	font-style: italic;	
+}
+
+.grid .selected {
+	background:silver;
+}

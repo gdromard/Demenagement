@@ -82,10 +82,10 @@ public class RpcDispatcherService extends RemoteServiceServlet {
                     String serviceClassName = this.getClass().getPackage().getName() + ".Csv" + serviceName.substring(0, 1).toUpperCase() + serviceName.substring(1) + "Service";
                     Class<CsvAbstractService<? extends Model>> clazz = (Class<CsvAbstractService<? extends Model>>) Class.forName(serviceClassName);
                     service = clazz.newInstance();
+                    services.put(serviceName, service);
                 }
                 // Service as been
                 if (service != null) {
-                    services.put(serviceName, service);
                     RPCRequest rpcRequest = RPC.decodeRequest(payload, service.getClass(), this);
                     onAfterRequestDeserialized(rpcRequest);
                     return RPC.invokeAndEncodeResponse(service, rpcRequest.getMethod(), rpcRequest.getParameters(), rpcRequest.getSerializationPolicy());
@@ -94,6 +94,7 @@ public class RpcDispatcherService extends RemoteServiceServlet {
                     return RPC.encodeResponseForFailure(null, new SerializationException("Failed to retrieve Service for url: '" + url + "'"));
                 }
             } catch (Exception e) {
+                e.printStackTrace();
                 log("Service for '" + url + "' has no been found.");
                 return RPC.encodeResponseForFailure(null, new SerializationException("Failed to retrieve Service"));
             }

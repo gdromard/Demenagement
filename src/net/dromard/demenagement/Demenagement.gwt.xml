@@ -11,10 +11,12 @@
 	<!-- <inherits name='com.google.gwt.user.theme.dark.Dark'/>     -->
 
 	<!-- Other module inherits                                      -->
+	<inherits name='net.dromard.mvp.Mvp'/>
+	<inherits name='net.dromard.widget.Widget'/>
+	<inherits name="com.google.gwt.resources.Resources" />
 
 	<!-- Specify the app entry point class.                         -->
 	<entry-point class='net.dromard.demenagement.client.ClientEntryPoint' />
-	<inherits name="com.google.gwt.resources.Resources" />
 
 	<!-- Specify the paths for translatable code                    -->
 	<source path='client' />

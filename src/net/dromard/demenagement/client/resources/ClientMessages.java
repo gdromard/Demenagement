@@ -28,4 +28,6 @@ public interface ClientMessages extends Messages {
     String labelDate();
 
     String labelDemenagements();
+
+    String actionLoad();
 }

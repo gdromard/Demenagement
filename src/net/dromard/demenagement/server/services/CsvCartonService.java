@@ -7,8 +7,9 @@ import java.util.List;
 import net.dromard.demenagement.server.repository.CsvRepository;
 import net.dromard.demenagement.shared.model.Carton;
 import net.dromard.demenagement.shared.model.Destination;
+import net.dromard.demenagement.shared.services.CartonService;
 
-public class CsvCartonService extends CsvAbstractService<Carton> {
+public class CsvCartonService extends CsvAbstractService<Carton> implements CartonService {
     private static final long serialVersionUID = 3094308138196214403L;
 
     @Override
