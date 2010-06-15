@@ -5,9 +5,13 @@ import net.dromard.demenagement.shared.model.Carton;
 import net.dromard.demenagement.shared.model.Destination;
 import net.dromard.mvp.client.View;
 import net.dromard.widget.client.ButtonWidget;
+import net.dromard.widget.client.DateBoxWidget;
+import net.dromard.widget.client.IdWidget;
+import net.dromard.widget.client.LabelWidget;
 import net.dromard.widget.client.TableWidget;
 import net.dromard.widget.client.impl.GwtButtonWidget;
 import net.dromard.widget.client.impl.GwtDateBoxWidget;
+import net.dromard.widget.client.impl.GwtIdWidget;
 import net.dromard.widget.client.impl.GwtLabelWidget;
 import net.dromard.widget.client.impl.GwtTableWidget;
 
@@ -22,46 +26,44 @@ import com.google.gwt.user.client.ui.Widget;
 public class DemenagementEditView extends Composite implements View {
     private final ClientMessages myMessages = GWT.create(ClientMessages.class);
 
-    private final GwtLabelWidget errorLabel = new GwtLabelWidget("");
+    private final LabelWidget errorLabel = new GwtLabelWidget("");
 
-    private final GwtButtonWidget deleteButton = new GwtButtonWidget(myMessages.actionDelete());
+    private final ButtonWidget cancelButton = new GwtButtonWidget(myMessages.actionCancel());
 
-    private final GwtButtonWidget cancelButton = new GwtButtonWidget(myMessages.actionCancel());
+    private final ButtonWidget saveButton = new GwtButtonWidget(myMessages.actionSave());
 
-    private final GwtButtonWidget saveButton = new GwtButtonWidget(myMessages.actionSave());
+    private final IdWidget idBox = new GwtIdWidget();
 
-    private final GwtDateBoxWidget dateBox = new GwtDateBoxWidget();
+    private final DateBoxWidget dateBox = new GwtDateBoxWidget();
 
-    private final GwtTableWidget cartonsList = new GwtTableWidget();
+    private final TableWidget cartonsList = new GwtTableWidget();
 
     public DemenagementEditView() {
         VerticalPanel vPanel = new VerticalPanel();
 
         Grid form = new Grid(3, 2);
         form.setWidget(0, 0, new Label(myMessages.labelDate()));
-        form.setWidget(0, 1, dateBox);
+        form.setWidget(0, 1, dateBox.getWidget());
         form.setWidget(1, 0, new Label(myMessages.labelCartons()));
-        form.setWidget(1, 1, cartonsList);
+        form.setWidget(1, 1, cartonsList.getWidget());
 
         HorizontalPanel btnPanel = new HorizontalPanel();
 
-        btnPanel.add(saveButton);
-        btnPanel.add(deleteButton);
-        btnPanel.add(cancelButton);
+        btnPanel.add(saveButton.getWidget());
+        btnPanel.add(cancelButton.getWidget());
 
-        vPanel.add(errorLabel);
+        vPanel.add(idBox.getWidget());
+        vPanel.add(errorLabel.getWidget());
         vPanel.add(form);
         vPanel.add(btnPanel);
         vPanel.setCellHorizontalAlignment(btnPanel, HorizontalPanel.ALIGN_CENTER);
-
-        setAddingMode();
 
         initWidget(vPanel);
     }
 
     public void addCarton(Carton carton, Destination primary, Destination secondary) {
         int row = cartonsList.getRowCount();
-        cartonsList.setWidget(row, 0, new Label(myMessages.labelCartonNumber() + carton.getNumero()));
+        cartonsList.setText(row, 0, myMessages.labelCartonNumber() + carton.getNumero());
         if (primary != null) {
             Label primaryLbl = new Label(primary.getName());
             primaryLbl.setTitle(primary.getDescription());
@@ -74,24 +76,8 @@ public class DemenagementEditView extends Composite implements View {
         }
     }
 
-    public void setAddingMode() {
-        errorLabel.setText("");
-        deleteButton.setVisible(false);
-        saveButton.setText(myMessages.actionAdd());
-    }
-
-    public void setEditMode() {
-        errorLabel.setText("");
-        deleteButton.setVisible(true);
-        saveButton.setText(myMessages.actionSave());
-    }
-
-    public GwtLabelWidget getErrorLabel() {
+    public LabelWidget getErrorLabel() {
         return errorLabel;
-    }
-
-    public ButtonWidget getDeleteButton() {
-        return deleteButton;
     }
 
     public TableWidget getCartonTable() {
@@ -106,8 +92,12 @@ public class DemenagementEditView extends Composite implements View {
         return saveButton;
     }
 
-    public GwtDateBoxWidget getDateBox() {
+    public DateBoxWidget getDateBox() {
         return dateBox;
+    }
+
+    public IdWidget getIdBox() {
+        return idBox;
     }
 
     @Override

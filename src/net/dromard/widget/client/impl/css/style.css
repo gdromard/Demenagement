@@ -1,0 +1,27 @@
+
+
+
+
+.grid {
+	border-collapse: collapse;
+}
+
+.gridHeader {
+	background-color: rgb(225, 225, 255);
+}
+
+.grid td {
+	padding: 4px;
+}
+
+.evenColor {
+  background-color: rgb(245, 245, 255);
+}
+
+.oddColor {
+  background-color: rgb(255, 255, 255);
+}
+
+.selected {
+  background-color: rgb(225, 225, 225);
+}

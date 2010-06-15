@@ -32,6 +32,6 @@ public class TemplatePresenter extends DefaultPresenter<TemplateView, TemplateEv
 
     @Override
     public void onChangeFooterWidget(Widget widget) {
-        getView().setRightTopWidget(widget);
+        getView().setFooterWidget(widget);
     }
 }

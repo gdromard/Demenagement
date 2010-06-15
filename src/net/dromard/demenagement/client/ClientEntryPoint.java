@@ -6,6 +6,7 @@ import net.dromard.demenagement.client.presenter.DebugPresenter;
 import net.dromard.demenagement.client.presenter.DemenagementEditPresenter;
 import net.dromard.demenagement.client.presenter.DemenagementListPresenter;
 import net.dromard.demenagement.client.presenter.TemplatePresenter;
+import net.dromard.demenagement.client.resources.ClientBundles;
 import net.dromard.demenagement.client.view.DebugView;
 import net.dromard.demenagement.client.view.DemenagementEditView;
 import net.dromard.demenagement.client.view.DemenagementListView;
@@ -14,6 +15,7 @@ import net.dromard.mvp.client.DefaultRunAsyncCallBack;
 
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.dom.client.StyleInjector;
 
 /**
  * Entry point classes define <code>onModuleLoad()</code>.
@@ -66,6 +68,8 @@ public class ClientEntryPoint implements EntryPoint {
 
                 demenagementListPresenter.bind();
                 demenagementEditPresenter.bind();
+
+                StyleInjector.inject(ClientBundles.INSTANCE.style().getText());
             }
         });
     }

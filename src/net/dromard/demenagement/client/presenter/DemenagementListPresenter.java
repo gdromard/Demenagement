@@ -49,7 +49,6 @@ public class DemenagementListPresenter extends DefaultPresenter<DemenagementList
                 TableWidget table = getView().getTable();
                 int rowIndex = table.getRowForEvent(event);
                 if (rowIndex > 0) {
-                    getEventBus().selectDemenagement(rowIndex - 1, list.get(rowIndex - 1));
                     getEventBus().editDemenagement(list.get(rowIndex - 1));
                 }
             }
@@ -59,7 +58,11 @@ public class DemenagementListPresenter extends DefaultPresenter<DemenagementList
                 TableWidget table = getView().getTable();
                 int rowIndex = table.getRowForEvent(event);
                 if (rowIndex > 0) {
-                    getEventBus().selectDemenagement(rowIndex - 1, list.get(rowIndex - 1));
+                    if (indexSelected == rowIndex) {
+                        getEventBus().unselectDemenagement(rowIndex - 1, list.get(rowIndex - 1));
+                    } else {
+                        getEventBus().selectDemenagement(rowIndex - 1, list.get(rowIndex - 1));
+                    }
                 }
             }
         });
@@ -88,6 +91,7 @@ public class DemenagementListPresenter extends DefaultPresenter<DemenagementList
 
             public void onSuccess(List<Demenagement> result) {
                 list = result;
+                getView().getTable().clear();
                 int nbUsers = result.size();
                 for (int i = 0; i < nbUsers; i++) {
                     displayDemenagement(list.get(i), i + 1);
@@ -141,23 +145,28 @@ public class DemenagementListPresenter extends DefaultPresenter<DemenagementList
     @Override
     public void onSelect(int rowIndex, Demenagement model) {
         TableWidget table = getView().getTable();
-        if (indexSelected > -1) {
+        if (indexSelected > 0) {
             table.unSelectRow(indexSelected);
         }
-        indexSelected = rowIndex;
-        table.selectRow(indexSelected);
-        getView().getDeleteButton().setEnabled(true);
+        if (indexSelected != rowIndex + 1) {
+            indexSelected = rowIndex + 1;
+            table.selectRow(indexSelected);
+            getView().getDeleteButton().setEnabled(true);
+        }
     }
 
     @Override
     public void onUnselect(int rowIndex, Demenagement model) {
-        getView().getTable().unSelectRow(rowIndex);
-        indexSelected = 0;
+        if (indexSelected == rowIndex + 1) {
+            indexSelected = 0;
+            getView().getDeleteButton().setEnabled(false);
+        }
+        getView().getTable().unSelectRow(rowIndex + 1);
     }
 
     @Override
     public void onUpdated(Demenagement model) {
-        displayDemenagement(model, list.indexOf(model) + 1);
+        reload();
     }
 
     @Override

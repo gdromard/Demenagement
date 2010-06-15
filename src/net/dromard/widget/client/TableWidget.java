@@ -4,6 +4,7 @@ import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.DoubleClickEvent;
 import com.google.gwt.event.dom.client.HasClickHandlers;
 import com.google.gwt.event.dom.client.HasDoubleClickHandlers;
+import com.google.gwt.user.client.ui.Widget;
 
 public interface TableWidget extends HasClickHandlers, HasDoubleClickHandlers, HasWidget {
 
@@ -17,8 +18,11 @@ public interface TableWidget extends HasClickHandlers, HasDoubleClickHandlers, H
 
     public void setText(int row, int column, String text);
 
+    public void setWidget(int row, int column, Widget widget);
+
     public int getRowCount();
 
     public void removeRow(int row);
 
+    public void clear();
 }

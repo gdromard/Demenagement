@@ -1,22 +1,16 @@
-package net.dromard.demenagement.client.resources;
+package net.dromard.widget.client.impl.css;
 
-import com.google.gwt.core.client.GWT;
 import com.google.gwt.resources.client.ClientBundle;
 
-public interface ClientBundles extends ClientBundle {
-    public static final ClientBundles INSTANCE = GWT.create(ClientBundles.class);
-
+public interface GwtWidgetsBundles extends ClientBundle {
     /*
-     * 
     @Source("resources/logo.png")
     public ImageResource logo();
      */
 
     /*
      * Usage
-     * 
      * <pre>
-     * 
      * </pre>
     @Source("resources/text.txt")
     public TextResource text();
@@ -32,6 +26,5 @@ public interface ClientBundles extends ClientBundle {
      * myWidget.setStyleName(theme.maClasse());
      * </pre>
      */
-    @Source("net/dromard/demenagement/client/resources/style.css")
     Style style();
 }
