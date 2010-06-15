@@ -50,6 +50,7 @@ public class DemenagementListPresenter extends DefaultPresenter<DemenagementList
                 int rowIndex = table.getRowForEvent(event);
                 if (rowIndex > 0) {
                     getEventBus().editDemenagement(list.get(rowIndex - 1));
+                    onSelect(rowIndex - 1, list.get(rowIndex - 1));
                 }
             }
         });
@@ -148,11 +149,9 @@ public class DemenagementListPresenter extends DefaultPresenter<DemenagementList
         if (indexSelected > 0) {
             table.unSelectRow(indexSelected);
         }
-        if (indexSelected != rowIndex + 1) {
-            indexSelected = rowIndex + 1;
-            table.selectRow(indexSelected);
-            getView().getDeleteButton().setEnabled(true);
-        }
+        indexSelected = rowIndex + 1;
+        table.selectRow(indexSelected);
+        getView().getDeleteButton().setEnabled(true);
     }
 
     @Override
