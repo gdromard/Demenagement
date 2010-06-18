@@ -25,3 +25,7 @@
 .selected {
   background-color: rgb(225, 225, 225);
 }
+
+.boxFormatError {
+	background-color: #FFCCCC;
+}

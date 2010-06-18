@@ -11,6 +11,11 @@ public class GwtLabelWidget extends Label implements LabelWidget {
         super(text);
     }
 
+    public GwtLabelWidget(String text, String title) {
+        this(text);
+        setTitle(title);
+    }
+
     @Override
     public Widget getWidget() {
         return this;

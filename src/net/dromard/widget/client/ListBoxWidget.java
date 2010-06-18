@@ -3,7 +3,7 @@ package net.dromard.widget.client;
 import com.google.gwt.event.dom.client.HasClickHandlers;
 import com.google.gwt.event.dom.client.HasKeyUpHandlers;
 
-public interface ListBoxWidget extends HasClickHandlers, HasKeyUpHandlers, HasWidget {
+public interface ListBoxWidget extends IsWidget, HasClickHandlers, HasKeyUpHandlers, HasWidget {
 
     public void setSelectedIndex(int index);
 

@@ -30,4 +30,32 @@ public interface ClientMessages extends Messages {
     String labelDemenagements();
 
     String actionLoad();
+
+    String cartonLabel();
+
+    String cartonsLabel();
+
+    String cartonIdLabel();
+
+    String cartonNumberLabel();
+
+    String cartonPrimaryDestinationLabel();
+
+    String cartonSecondaryDestinationLabel();
+
+    String movingLabel();
+
+    String movingsLabel();
+
+    String movingIdLabel();
+
+    String movingDateLabel();
+
+    String destinationErrorNotFound();
+
+    String questionAreYouSure();
+
+    String buttonNo();
+
+    String buttonYes();
 }

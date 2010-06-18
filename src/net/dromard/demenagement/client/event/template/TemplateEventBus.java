@@ -21,7 +21,6 @@ public class TemplateEventBus extends EventBus<TemplateEventHandler> implements 
         addHandler(CHANGE_RIGHT_TOP_TYPE, handler);
         addHandler(CHANGE_LEFT_TYPE, handler);
         addHandler(CHANGE_FOOTER_TYPE, handler);
-        addHandler(handler);
     }
 
     public void changeRightBottomWidget(final Widget widget) {
@@ -45,7 +44,7 @@ public class TemplateEventBus extends EventBus<TemplateEventHandler> implements 
         new DefaultRunAsyncCallBack() {
             @Override
             public void onSuccess() {
-                for (TemplateEventHandler handler : getHandlers()) {
+                for (ChangeRightBottomWidgetEventHandler handler : getHandlers(CHANGE_RIGHT_BOTTOM_TYPE)) {
                     handler.onChangeRightBottomWidget(widget);
                 }
             }
@@ -57,7 +56,7 @@ public class TemplateEventBus extends EventBus<TemplateEventHandler> implements 
         new DefaultRunAsyncCallBack() {
             @Override
             public void onSuccess() {
-                for (TemplateEventHandler handler : getHandlers()) {
+                for (ChangeRightTopWidgetEventHandler handler : getHandlers(CHANGE_RIGHT_TOP_TYPE)) {
                     handler.onChangeRightTopWidget(widget);
                 }
             }
@@ -69,7 +68,7 @@ public class TemplateEventBus extends EventBus<TemplateEventHandler> implements 
         new DefaultRunAsyncCallBack() {
             @Override
             public void onSuccess() {
-                for (TemplateEventHandler handler : getHandlers()) {
+                for (ChangeLeftWidgetEventHandler handler : getHandlers(CHANGE_LEFT_TYPE)) {
                     handler.onChangeLeftWidget(widget);
                 }
             }
@@ -81,7 +80,7 @@ public class TemplateEventBus extends EventBus<TemplateEventHandler> implements 
         new DefaultRunAsyncCallBack() {
             @Override
             public void onSuccess() {
-                for (TemplateEventHandler handler : getHandlers()) {
+                for (ChangeFooterWidgetEventHandler handler : getHandlers(CHANGE_FOOTER_TYPE)) {
                     handler.onChangeFooterWidget(widget);
                 }
             }

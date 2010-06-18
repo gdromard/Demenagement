@@ -1,12 +1,17 @@
 package net.dromard.demenagement.client;
 
-import net.dromard.demenagement.client.event.demenagement.DemenagementEventBus;
+import net.dromard.demenagement.client.event.CartonEventBus;
+import net.dromard.demenagement.client.event.DemenagementEventBus;
 import net.dromard.demenagement.client.event.template.TemplateEventBus;
+import net.dromard.demenagement.client.presenter.CartonEditPresenter;
+import net.dromard.demenagement.client.presenter.CartonListPresenter;
 import net.dromard.demenagement.client.presenter.DebugPresenter;
 import net.dromard.demenagement.client.presenter.DemenagementEditPresenter;
 import net.dromard.demenagement.client.presenter.DemenagementListPresenter;
 import net.dromard.demenagement.client.presenter.TemplatePresenter;
 import net.dromard.demenagement.client.resources.ClientBundles;
+import net.dromard.demenagement.client.view.CartonEditView;
+import net.dromard.demenagement.client.view.CartonListView;
 import net.dromard.demenagement.client.view.DebugView;
 import net.dromard.demenagement.client.view.DemenagementEditView;
 import net.dromard.demenagement.client.view.DemenagementListView;
@@ -30,46 +35,73 @@ public class ClientEntryPoint implements EntryPoint {
         // Old code
         //new ModuleHandler().load();
 
-        // New Code
+        // Inject internal CSS
+        StyleInjector.inject(ClientBundles.INSTANCE.style().getText());
+
+        // Initiate Template
+        final TemplateEventBus templateEventBus = new TemplateEventBus();
+        TemplatePresenter templatePresenter = new TemplatePresenter();
+        TemplateView templateView = new TemplateView();
+        templateEventBus.register(templatePresenter);
+        templatePresenter.setView(templateView);
+        templatePresenter.setEventBus(templateEventBus);
+        templatePresenter.bind();
+
+        // Load Moving Widget
         GWT.runAsync(new DefaultRunAsyncCallBack() {
             @Override
             public void onSuccess() {
-                TemplateEventBus templateEventBus = new TemplateEventBus();
                 DemenagementEventBus demenagementEventBus = new DemenagementEventBus(templateEventBus);
 
-                TemplatePresenter templatePresenter = new TemplatePresenter();
-                TemplateView templateView = new TemplateView();
-                templateEventBus.register(templatePresenter);
-                templatePresenter.setView(templateView);
-                templatePresenter.setEventBus(templateEventBus);
-                templatePresenter.bind();
-
                 DemenagementListPresenter demenagementListPresenter = new DemenagementListPresenter();
-                DemenagementListView demenagementListView = new DemenagementListView();
-                demenagementEventBus.register(demenagementListPresenter);
-                demenagementListPresenter.setView(demenagementListView);
+                demenagementListPresenter.setView(new DemenagementListView());
                 demenagementListPresenter.setEventBus(demenagementEventBus);
 
                 DemenagementEditPresenter demenagementEditPresenter = new DemenagementEditPresenter();
-                DemenagementEditView demenagementEditView = new DemenagementEditView();
-                demenagementEventBus.register(demenagementEditPresenter);
-                demenagementEditPresenter.setView(demenagementEditView);
+                demenagementEditPresenter.setView(new DemenagementEditView());
                 demenagementEditPresenter.setEventBus(demenagementEventBus);
 
                 if (debug) {
                     DebugPresenter debugPresenter = new DebugPresenter();
                     DebugView debugView = new DebugView();
                     templateEventBus.register(debugPresenter);
-                    demenagementEventBus.register(debugPresenter);
                     debugPresenter.setView(debugView);
                     debugPresenter.setEventBus(demenagementEventBus);
                     debugPresenter.bind();
+
+                    demenagementEventBus.register(debugPresenter);
                 }
+
+                demenagementEventBus.register(demenagementEditPresenter);
+                demenagementEventBus.register(demenagementListPresenter);
 
                 demenagementListPresenter.bind();
                 demenagementEditPresenter.bind();
+            }
+        });
 
-                StyleInjector.inject(ClientBundles.INSTANCE.style().getText());
+        // Load Demenagement Widget
+        GWT.runAsync(new DefaultRunAsyncCallBack() {
+            @Override
+            public void onSuccess() {
+                CartonEventBus cartonEventBus = new CartonEventBus(templateEventBus);
+
+                CartonListPresenter cartonsPresenter = new CartonListPresenter();
+                cartonsPresenter.setEventBus(cartonEventBus);
+                cartonsPresenter.setView(new CartonListView());
+
+                CartonEditPresenter cartonPresenter = new CartonEditPresenter();
+                cartonPresenter.setEventBus(cartonEventBus);
+                cartonPresenter.setView(new CartonEditView());
+
+                if (debug) {
+                    //cartonEventBus.register(debugPresenter);
+                }
+                cartonEventBus.register(cartonsPresenter);
+                cartonEventBus.register(cartonPresenter);
+
+                cartonsPresenter.bind();
+                cartonPresenter.bind();
             }
         });
     }

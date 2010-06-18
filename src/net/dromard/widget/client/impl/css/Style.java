@@ -12,4 +12,6 @@ public interface Style extends CssResource {
     String grid();
 
     String gridHeader();
+
+    String boxFormatError();
 }

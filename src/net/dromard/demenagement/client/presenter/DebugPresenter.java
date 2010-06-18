@@ -1,10 +1,11 @@
 package net.dromard.demenagement.client.presenter;
 
-import net.dromard.demenagement.client.event.demenagement.DemenagementEventBus;
-import net.dromard.demenagement.client.event.demenagement.DemenagementEventHandler;
+import net.dromard.demenagement.client.event.DemenagementEventBus;
+import net.dromard.demenagement.client.event.DemenagementEventHandler;
 import net.dromard.demenagement.client.event.template.TemplateEventHandler;
 import net.dromard.demenagement.client.view.DebugView;
 import net.dromard.demenagement.shared.model.Demenagement;
+import net.dromard.demenagement.shared.model.Model;
 import net.dromard.mvp.client.DefaultPresenter;
 
 import com.google.gwt.user.client.ui.Widget;
@@ -74,5 +75,10 @@ public class DebugPresenter extends DefaultPresenter<DebugView, DemenagementEven
     @Override
     public void onDeleted(Demenagement model) {
         getView().appendMessage("[DEBUG] onDemenagementDeleted fired");
+    }
+
+    @Override
+    public void onListChanged(Class<? extends Model> clazz) {
+        getView().appendMessage("[DEBUG] on" + clazz.getName().substring(clazz.getName().lastIndexOf('.') + 1) + "ListChanged fired");
     }
 }

@@ -5,8 +5,9 @@ import com.google.gwt.event.dom.client.DoubleClickEvent;
 import com.google.gwt.event.dom.client.HasClickHandlers;
 import com.google.gwt.event.dom.client.HasDoubleClickHandlers;
 import com.google.gwt.user.client.ui.Widget;
+import com.google.gwt.user.client.ui.FlexTable.FlexCellFormatter;
 
-public interface TableWidget extends HasClickHandlers, HasDoubleClickHandlers, HasWidget {
+public interface TableWidget extends IsWidget, HasClickHandlers, HasDoubleClickHandlers, HasWidget {
 
     public int getRowForEvent(ClickEvent event);
 
@@ -25,4 +26,6 @@ public interface TableWidget extends HasClickHandlers, HasDoubleClickHandlers, H
     public void removeRow(int row);
 
     public void clear();
+
+    public FlexCellFormatter getFlexCellFormatter();
 }

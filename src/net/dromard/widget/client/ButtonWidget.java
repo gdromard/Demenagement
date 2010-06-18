@@ -2,7 +2,7 @@ package net.dromard.widget.client;
 
 import com.google.gwt.event.dom.client.HasClickHandlers;
 
-public interface ButtonWidget extends HasClickHandlers, HasWidget {
+public interface ButtonWidget extends IsWidget, HasClickHandlers, HasWidget {
 
     public void setEnabled(boolean enabled);
 

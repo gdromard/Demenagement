@@ -1,6 +1,6 @@
 package net.dromard.widget.client;
 
-public interface HiddenWidget extends HasWidget {
+public interface HiddenWidget extends IsWidget, HasWidget {
 
     /**
      * Gets this object's value.

@@ -1,3 +1,8 @@
 .labelColorError {
   color: red;
 }
+
+.confirmPopupMessage {
+	padding: 5px;
+	margin: 5px;
+}

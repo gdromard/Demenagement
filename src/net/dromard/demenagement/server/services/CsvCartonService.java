@@ -24,7 +24,7 @@ public class CsvCartonService extends CsvAbstractService<Carton> implements Cart
 
     @Override
     protected boolean synchronize(Carton master, Carton slave) {
-        slave.setNumero(master.getNumero());
+        slave.setNumber(master.getNumber());
         slave.setPrimaryDestination(master.getPrimaryDestination());
         slave.setSecondaryDestination(master.getSecondaryDestination());
         return true;

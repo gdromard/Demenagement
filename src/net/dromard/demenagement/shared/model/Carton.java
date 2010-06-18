@@ -6,7 +6,7 @@ public class Carton implements Model, Serializable {
 
     private static final long serialVersionUID = -4984816144263505451L;
 
-    private int numero;
+    private int number;
 
     private int primaryDestination;
 
@@ -22,12 +22,12 @@ public class Carton implements Model, Serializable {
         this.id = id;
     }
 
-    public int getNumero() {
-        return numero;
+    public int getNumber() {
+        return number;
     }
 
-    public void setNumero(int numero) {
-        this.numero = numero;
+    public void setNumber(int number) {
+        this.number = number;
     }
 
     public int getPrimaryDestination() {
