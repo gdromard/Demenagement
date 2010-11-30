@@ -169,5 +169,6 @@ public abstract class ModelListPresenter<M extends Model> extends DefaultPresent
 
     @Override
     public void onListChanged(Class<? extends Model> clazz) {
+        reload();
     }
 }
